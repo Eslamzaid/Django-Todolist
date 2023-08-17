@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block extra_head %}
+{% endblock %}
+{% block content %}
+<div class="center">
+    <form class="todo-form" method="post">
+        {% csrf_token %}
+        <label for="{{ form.todo.id_for_label }}">Todo:</label>
+        {{ form.todo }}
+        <div class="hidden">
+            {{ form.status }}
+        </div>
+        <label for="{{ form.description.id_for_label }}">Description:</label>
+        {{ form.description }}
+        <label for="{{ form.time.id_for_label }}">Time:</label>
+        <input type="time" id="{{ form.time.id_for_label }}" name="{{ form.time.name }}"
+            value="{{ form.time.value|default:'' }}" class="form-control">
+        <button type="submit">Add todo</button>
+    </form>
+</div>
+<div class="center">
+    {% if todos %}
+    <table class="parentTable">
+        <thead>
+            <tr>
+                <th>Todo</th>
+                <th>Description</th>
+                <th>Time</th>
+                <th>Edit</th>
+                <th>Finish</th>
+            </tr>
+        </thead>
+        <tbody class="myTable">
+            {% for todo in todos %}
+            <tr class="row-{{forloop.counter}}">
+                <td class="todo-{{forloop.counter}}" id="todo">{{ todo.todo }}</td>
+                <td class="todoDes-{{forloop.counter}}">{{ todo.description }}</td>
+                <td>{{ todo.time }}</td>
+                <td>
+                    <button data-inc="{{ forloop.counter }}" class="info-button">Modify</button>
+                </td>
+                <td>
+                    <button data-button="{{forloop.counter}}" class="danger-button">Done</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Your todo is empty</p>
+    {% endif %}
+</div>
+
+{% endblock %}
