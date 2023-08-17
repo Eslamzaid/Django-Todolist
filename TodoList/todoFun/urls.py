@@ -4,4 +4,4 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("data", views.getData, name="data"),
     path("delete", views.deleteData, name="delete"),
-]
+]   
